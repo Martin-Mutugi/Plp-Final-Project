@@ -195,35 +195,78 @@ function App() {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="bg-charcoal text-white py-8 mt-16">
+      {/* Fixed Footer */}
+      <footer className="bg-charcoal text-white py-12 mt-auto">
         <div className="container">
-          <div className="grid grid-3 text-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
             <div>
-              <h4 className="text-white mb-4">🌍 Our Mission</h4>
-              <p className="text-sm opacity-80">
-                Advancing UN Sustainable Development Goals through AI-powered sustainable agriculture
+              <h4 className="text-white mb-4 text-lg font-semibold">🌍 Our Mission</h4>
+              <p className="text-cloud text-sm leading-relaxed">
+                Advancing UN Sustainable Development Goals through AI-powered sustainable agriculture. 
+                We're building a future where technology and ecology work hand in hand.
               </p>
             </div>
+            
             <div>
-              <h4 className="text-white mb-4">🎯 Impact Goals</h4>
-              <ul className="text-sm opacity-80 space-y-1">
-                <li>SDG 2: Zero Hunger</li>
-                <li>SDG 12: Responsible Consumption</li>
-                <li>SDG 13: Climate Action</li>
+              <h4 className="text-white mb-4 text-lg font-semibold">🎯 Impact Goals</h4>
+              <ul className="text-cloud text-sm space-y-2">
+                <li className="flex items-center justify-center md:justify-start gap-2">
+                  <span className="text-emerald">✓</span>
+                  SDG 2: Zero Hunger
+                </li>
+                <li className="flex items-center justify-center md:justify-start gap-2">
+                  <span className="text-emerald">✓</span>
+                  SDG 12: Responsible Consumption
+                </li>
+                <li className="flex items-center justify-center md:justify-start gap-2">
+                  <span className="text-emerald">✓</span>
+                  SDG 13: Climate Action
+                </li>
               </ul>
             </div>
+            
             <div>
-              <h4 className="text-white mb-4">📞 Contact</h4>
-              <p className="text-sm opacity-80">
-                support@agrismart-sdg.org
-              </p>
+              <h4 className="text-white mb-4 text-lg font-semibold">📞 Get In Touch</h4>
+              <div className="text-cloud text-sm space-y-2">
+                <p className="flex items-center justify-center md:justify-start gap-2">
+                  <span>📧</span>
+                  support@agrismart-sdg.org
+                </p>
+                <p className="flex items-center justify-center md:justify-start gap-2">
+                  <span>🌐</span>
+                  www.agrismart-sdg.org
+                </p>
+              </div>
+              
+              <div className="mt-4 flex justify-center md:justify-start gap-4">
+                <button className="text-cloud hover:text-white transition-colors">
+                  <span className="text-lg">📘</span>
+                </button>
+                <button className="text-cloud hover:text-white transition-colors">
+                  <span className="text-lg">🐦</span>
+                </button>
+                <button className="text-cloud hover:text-white transition-colors">
+                  <span className="text-lg">📸</span>
+                </button>
+              </div>
             </div>
           </div>
-          <div className="text-center mt-8 pt-6 border-t border-stone">
-            <p className="text-sm opacity-60">
-              &copy; 2024 AgriSmart SDG Platform. Building a sustainable future together.
-            </p>
+          
+          {/* Bottom Section */}
+          <div className="mt-8 pt-8 border-t border-stone border-opacity-30">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="text-center md:text-left">
+                <p className="text-cloud text-sm">
+                  &copy; 2024 AgriSmart SDG Platform. Building a sustainable future together.
+                </p>
+              </div>
+              
+              <div className="flex gap-6 text-cloud text-sm">
+                <button className="hover:text-white transition-colors">Privacy Policy</button>
+                <button className="hover:text-white transition-colors">Terms of Service</button>
+                <button className="hover:text-white transition-colors">Cookie Policy</button>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
