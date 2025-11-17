@@ -25,7 +25,7 @@ function PremiumDashboard({ user }) {
 
   const loadAnalytics = async () => {
     try {
-      const response = await fetch(`/api/premium/analytics/${user.id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/premium/analytics/${user.id}`);
       if (response.ok) {
         const data = await response.json();
         setAnalytics(data);
@@ -37,7 +37,7 @@ function PremiumDashboard({ user }) {
 
   const loadClimateForecast = async () => {
     try {
-      const response = await fetch(`/api/premium/climate-forecast/${user.id}?crop=maize`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/premium/climate-forecast/${user.id}?crop=maize`);
       if (response.ok) {
         const data = await response.json();
         setClimateForecast(data);
@@ -49,7 +49,7 @@ function PremiumDashboard({ user }) {
 
   const loadSupplyChainTips = async () => {
     try {
-      const response = await fetch(`/api/premium/supply-chain/${user.id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/premium/supply-chain/${user.id}`);
       if (response.ok) {
         const data = await response.json();
         setSupplyChainTips(data);
@@ -61,7 +61,7 @@ function PremiumDashboard({ user }) {
 
   const loadAchievements = async () => {
     try {
-      const response = await fetch(`/api/premium/achievements/${user.id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/premium/achievements/${user.id}`);
       if (response.ok) {
         const data = await response.json();
         setAchievements(data);
@@ -73,7 +73,7 @@ function PremiumDashboard({ user }) {
 
   const loadRegionalCrops = async () => {
     try {
-      const response = await fetch(`/api/premium/regional-crops/${user.id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/premium/regional-crops/${user.id}`);
       if (response.ok) {
         const data = await response.json();
         setRegionalCrops(data);
@@ -85,7 +85,7 @@ function PremiumDashboard({ user }) {
 
   const loadPrioritySupport = async () => {
     try {
-      const response = await fetch(`/api/premium/priority-support/${user.id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/premium/priority-support/${user.id}`);
       if (response.ok) {
         const data = await response.json();
         setPrioritySupport(data);
@@ -97,7 +97,7 @@ function PremiumDashboard({ user }) {
 
   const awardAchievement = async (type) => {
     try {
-      const response = await fetch(`/api/premium/achievements/${user.id}/award`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/premium/achievements/${user.id}/award`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ achievementType: type })

@@ -14,7 +14,7 @@ function FarmerTools({ user }) {
 
   const fetchFarmData = async () => {
     try {
-      const response = await fetch(`/api/farmer/${user.id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/farmer/${user.id}`);
       if (response.ok) {
         const data = await response.json();
         setFarmData(data);
@@ -26,7 +26,7 @@ function FarmerTools({ user }) {
 
   const addCrop = async () => {
     try {
-      const response = await fetch(`/api/farmer/${user.id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/farmer/${user.id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -50,7 +50,7 @@ function FarmerTools({ user }) {
 
   const analyzePest = async () => {
     try {
-      const response = await fetch(`/api/farmer/${user.id}/pests/analyze`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/farmer/${user.id}/pests/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(pestAnalysis)
@@ -69,7 +69,7 @@ function FarmerTools({ user }) {
 
   const scheduleIrrigation = async () => {
     try {
-      const response = await fetch(`/api/farmer/${user.id}/irrigation/schedule`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/farmer/${user.id}/irrigation/schedule`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(irrigationData)

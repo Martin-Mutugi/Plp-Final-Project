@@ -6,7 +6,7 @@ function ChatHistory({ user }) {
   useEffect(() => {
     const fetchChatHistory = async () => {
       try {
-        const response = await fetch(`/api/chat/history/${user.id}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/chat/history/${user.id}`);
         if (response.ok) {
           const chats = await response.json();
           setChatSessions(chats);

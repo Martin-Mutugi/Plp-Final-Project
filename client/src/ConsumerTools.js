@@ -12,7 +12,7 @@ function ConsumerTools({ user }) {
 
   const fetchConsumerData = async () => {
     try {
-      const response = await fetch(`/api/consumer/${user.id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/consumer/${user.id}`);
       if (response.ok) {
         const data = await response.json();
         setConsumerData(data);
@@ -24,7 +24,7 @@ function ConsumerTools({ user }) {
 
   const logFoodWaste = async () => {
     try {
-      const response = await fetch(`/api/consumer/${user.id}/food-waste`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/consumer/${user.id}/food-waste`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(foodWaste)
@@ -42,7 +42,7 @@ function ConsumerTools({ user }) {
 
   const calculateCarbonFootprint = async () => {
     try {
-      const response = await fetch(`/api/consumer/${user.id}/carbon-footprint`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/consumer/${user.id}/carbon-footprint`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(carbonData)

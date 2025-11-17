@@ -32,7 +32,7 @@ function SubscriptionUpgrade({ user, setUser }) {
   const handleUpgrade = async (plan) => {
     setIsProcessing(true);
     try {
-      const response = await fetch('/api/subscriptions/initialize', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/initialize`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

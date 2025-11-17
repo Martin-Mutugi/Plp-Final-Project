@@ -26,7 +26,7 @@ function ChatInterface({ user, setUser }) {
     setCurrentSessionId(sessionId);
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/chat/history/${user.id}/${sessionId}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/chat/history/${user.id}/${sessionId}`);
       if (response.ok) {
         const chats = await response.json();
         // Convert database format to chat display format
@@ -56,7 +56,7 @@ function ChatInterface({ user, setUser }) {
     setIsLoading(true);
     
     try {
-      const response = await fetch('/api/chat/message', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/chat/message`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ function ChatInterface({ user, setUser }) {
   // Fetch all chat sessions
   const fetchSessions = async () => {
     try {
-      const response = await fetch(`/api/chat/sessions/${user.id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/chat/sessions/${user.id}`);
       if (response.ok) {
         const sessionsData = await response.json();
         setSessions(sessionsData);
