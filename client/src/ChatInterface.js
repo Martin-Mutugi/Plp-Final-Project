@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 function ChatInterface({ user, setUser }) {
   const [message, setMessage] = useState('');
@@ -7,6 +7,16 @@ function ChatInterface({ user, setUser }) {
   const [sessions, setSessions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('english');
+  const messagesEndRef = useRef(null);
+
+  // Auto-scroll to bottom
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatHistory]);
 
   // Generate a unique session ID
   const generateSessionId = () => {
@@ -114,150 +124,208 @@ function ChatInterface({ user, setUser }) {
   }, [user.id]);
 
   return (
-    <div style={{ display: 'flex', height: '600px' }}>
+    <div className="chat-container">
       {/* Sessions Sidebar */}
-      <div style={{ width: '250px', borderRight: '1px solid #ccc', padding: '10px' }}>
-        <button 
-          onClick={startNewChat}
-          style={{ 
-            width: '100%', 
-            padding: '10px', 
-            marginBottom: '15px',
-            backgroundColor: '#28a745',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer'
-          }}
-        >
-          + New Chat
-        </button>
-        
-        <h4>Chat Sessions</h4>
-        {sessions.map(session => (
-          <div 
-            key={session._id}
-            onClick={() => loadChatSession(session._id)}
-            style={{ 
-              padding: '10px',
-              marginBottom: '5px',
-              border: '1px solid #ddd',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              backgroundColor: currentSessionId === session._id ? '#e9ecef' : 'white'
-            }}
-          >
-            <div style={{ fontSize: '12px', color: '#666' }}>
-              {new Date(session.lastTimestamp).toLocaleDateString()}
-            </div>
-            <div style={{ 
-              fontSize: '14px', 
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis'
-            }}>
-              {session.lastMessage}
-            </div>
-            <div style={{ fontSize: '11px', color: '#999' }}>
-              {session.messageCount} messages
+      <div className="chat-sidebar">
+        <div className="flex flex-col h-full">
+          {/* Header */}
+          <div className="mb-4">
+            <button 
+              onClick={startNewChat}
+              className="btn btn-primary w-full mb-3"
+            >
+              <span className="text-lg mr-2">+</span>
+              New Chat
+            </button>
+            
+            <h4 className="font-semibold text-charcoal mb-3 flex items-center gap-2">
+              <span>💬</span>
+              Chat History
+            </h4>
+          </div>
+
+          {/* Sessions List */}
+          <div className="flex-1 overflow-y-auto">
+            {sessions.length === 0 ? (
+              <div className="text-center text-stone p-4">
+                <div className="text-2xl mb-2">📚</div>
+                <p className="text-sm">No previous chats</p>
+                <p className="text-xs">Start a conversation to see history here</p>
+              </div>
+            ) : (
+              sessions.map(session => (
+                <div 
+                  key={session._id}
+                  onClick={() => loadChatSession(session._id)}
+                  className={`p-3 mb-2 rounded-lg cursor-pointer transition-all ${
+                    currentSessionId === session._id 
+                      ? 'bg-emerald bg-opacity-10 border border-emerald border-opacity-30' 
+                      : 'bg-cloud hover:bg-cloud-dark border border-transparent'
+                  }`}
+                >
+                  <div className="flex justify-between items-start mb-1">
+                    <div className="text-xs text-stone">
+                      {new Date(session.lastTimestamp).toLocaleDateString()}
+                    </div>
+                    <span className="text-xs bg-charcoal bg-opacity-10 text-charcoal px-1 rounded">
+                      {session.messageCount}
+                    </span>
+                  </div>
+                  <div className="text-sm font-medium text-charcoal line-clamp-2">
+                    {session.lastMessage || 'New conversation'}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          {/* Footer */}
+          <div className="pt-4 border-t border-cloud">
+            <div className="text-xs text-stone text-center">
+              {user.subscriptionTier === 'free' ? (
+                <p>{6 - (user.promptsUsed || 0)} prompts remaining</p>
+              ) : (
+                <p>✨ Unlimited AI access</p>
+              )}
             </div>
           </div>
-        ))}
+        </div>
       </div>
 
       {/* Chat Area */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <div style={{ 
-          flex: 1, 
-          border: '1px solid #ccc', 
-          overflowY: 'scroll', 
-          padding: '10px' 
-        }}>
-          {/* Language Selector for Premium Users */}
-          {user.subscriptionTier !== 'free' && (
-            <div style={{ marginBottom: '10px', padding: '5px', borderBottom: '1px solid #eee' }}>
-              <label style={{ fontSize: '14px', fontWeight: 'bold' }}>Language: </label>
-              <select 
-                value={selectedLanguage} 
-                onChange={(e) => setSelectedLanguage(e.target.value)}
-                style={{ padding: '5px', marginLeft: '10px', borderRadius: '3px', border: '1px solid #ccc' }}
-              >
-                <option value="english">English</option>
-                <option value="spanish">Spanish</option>
-                <option value="french">French</option>
-                <option value="swahili">Swahili</option>
-                <option value="hindi">Hindi</option>
-                <option value="arabic">Arabic</option>
-                <option value="portuguese">Portuguese</option>
-              </select>
-              <span style={{ fontSize: '12px', color: '#666', marginLeft: '10px' }}>
-                🌍 Premium Feature
-              </span>
+      <div className="chat-main">
+        {/* Chat Header */}
+        <div className="chat-header p-4 border-b border-cloud bg-white">
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold text-charcoal flex items-center gap-2">
+              <span className="text-lg">🌱</span>
+              AgriSmart AI Assistant
+            </h3>
+            
+            {/* Language Selector for Premium Users */}
+            {user.subscriptionTier !== 'free' && (
+              <div className="flex items-center gap-3">
+                <label className="text-sm font-medium text-charcoal">Language:</label>
+                <select 
+                  value={selectedLanguage} 
+                  onChange={(e) => setSelectedLanguage(e.target.value)}
+                  className="form-select text-sm"
+                  style={{ width: 'auto', minWidth: '120px' }}
+                >
+                  <option value="english">English</option>
+                  <option value="spanish">Spanish</option>
+                  <option value="french">French</option>
+                  <option value="swahili">Swahili</option>
+                  <option value="hindi">Hindi</option>
+                  <option value="arabic">Arabic</option>
+                  <option value="portuguese">Portuguese</option>
+                </select>
+                <span className="sdg-badge text-xs">
+                  🌍 Premium
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Messages Area */}
+        <div className="chat-messages">
+          {chatHistory.length === 0 && !isLoading && (
+            <div className="text-center py-12">
+              <div className="text-6xl mb-4">🌾</div>
+              <h3 className="text-xl font-semibold text-charcoal mb-2">
+                Welcome to AgriSmart AI
+              </h3>
+              <p className="text-stone max-w-md mx-auto">
+                Ask me anything about sustainable agriculture, crop planning, 
+                climate-smart practices, or food waste reduction.
+              </p>
+              <div className="mt-6 grid grid-2 gap-3 max-w-lg mx-auto">
+                <button 
+                  onClick={() => setMessage("How can I improve soil health for maize cultivation?")}
+                  className="btn btn-outline text-sm text-left justify-start"
+                >
+                  🌱 Soil health tips
+                </button>
+                <button 
+                  onClick={() => setMessage("What are climate-smart irrigation practices?")}
+                  className="btn btn-outline text-sm text-left justify-start"
+                >
+                  💧 Irrigation advice
+                </button>
+                <button 
+                  onClick={() => setMessage("How can I reduce food waste at home?")}
+                  className="btn btn-outline text-sm text-left justify-start"
+                >
+                  🗑️ Reduce food waste
+                </button>
+                <button 
+                  onClick={() => setMessage("Best sustainable crops for my region")}
+                  className="btn btn-outline text-sm text-left justify-start"
+                >
+                  🌍 Regional crops
+                </button>
+              </div>
             </div>
           )}
 
           {chatHistory.map((chat, index) => (
-            <div key={index} style={{ 
-              marginBottom: '10px', 
-              textAlign: chat.type === 'user' ? 'right' : 'left' 
-            }}>
-              <div style={{ 
-                display: 'inline-block', 
-                padding: '8px 12px', 
-                borderRadius: '15px',
-                backgroundColor: chat.type === 'user' ? '#007bff' : '#f1f1f1',
-                color: chat.type === 'user' ? 'white' : 'black',
-                maxWidth: '70%'
-              }}>
+            <div 
+              key={index} 
+              className={`message ${chat.type === 'user' ? 'message-user' : 'message-ai'}`}
+            >
+              <div className="message-bubble">
                 {chat.content}
               </div>
             </div>
           ))}
+          
           {isLoading && (
-            <div style={{ textAlign: 'left', marginBottom: '10px' }}>
-              <div style={{ 
-                display: 'inline-block', 
-                padding: '8px 12px', 
-                borderRadius: '15px',
-                backgroundColor: '#f1f1f1',
-                color: '#666'
-              }}>
-                Thinking...
+            <div className="message message-ai">
+              <div className="message-bubble">
+                <div className="flex items-center gap-2">
+                  <div className="loading" style={{ width: '16px', height: '16px' }}></div>
+                  <span className="text-stone">Thinking...</span>
+                </div>
               </div>
             </div>
           )}
+          
+          <div ref={messagesEndRef} />
         </div>
 
-        <form onSubmit={handleSendMessage} style={{ padding: '10px', borderTop: '1px solid #ccc' }}>
-          <input 
-            type="text" 
-            value={message} 
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Ask about sustainable agriculture..."
-            style={{ 
-              width: 'calc(100% - 80px)', 
-              padding: '10px', 
-              marginRight: '10px',
-              border: '1px solid #ccc',
-              borderRadius: '5px'
-            }}
-            disabled={isLoading}
-          />
-          <button 
-            type="submit" 
-            style={{ 
-              padding: '10px 20px',
-              backgroundColor: '#007bff',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer'
-            }}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Sending...' : 'Send'}
-          </button>
-        </form>
+        {/* Input Area */}
+        <div className="chat-input-container">
+          <form onSubmit={handleSendMessage} className="flex gap-3">
+            <input 
+              type="text" 
+              value={message} 
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Ask about sustainable agriculture, crop planning, climate practices..."
+              className="form-input flex-1"
+              disabled={isLoading}
+            />
+            <button 
+              type="submit" 
+              className="btn btn-primary px-6"
+              disabled={isLoading || !message.trim()}
+            >
+              {isLoading ? (
+                <div className="flex items-center gap-2">
+                  <div className="loading" style={{ width: '16px', height: '16px' }}></div>
+                  Sending...
+                </div>
+              ) : (
+                'Send'
+              )}
+            </button>
+          </form>
+          
+          {/* Quick Tips */}
+          <div className="mt-3 text-xs text-stone text-center">
+            💡 Try asking about: organic farming, pest management, water conservation, or sustainable diets
+          </div>
+        </div>
       </div>
     </div>
   );
