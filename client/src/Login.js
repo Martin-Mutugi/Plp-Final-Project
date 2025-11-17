@@ -7,8 +7,13 @@ function Login(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Debug logs to check the API URL
+    console.log('Environment URL:', process.env.REACT_APP_API_URL);
+    const apiUrl = `${process.env.REACT_APP_API_URL}/api/auth/login`;
+    console.log('Full API URL:', apiUrl);
+    
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -16,6 +21,7 @@ function Login(props) {
         body: JSON.stringify({ email, password }),
       });
 
+      console.log('Response status:', response.status);
       const data = await response.json();
       
       if (response.ok) {
