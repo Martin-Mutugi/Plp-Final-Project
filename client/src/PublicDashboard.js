@@ -6,9 +6,11 @@ function PublicDashboard() {
   const [showCharts, setShowCharts] = useState(false);
 
   useEffect(() => {
-    fetch('/api/dashboard/public')
+    // FIXED: Use full backend URL
+    fetch(`${process.env.REACT_APP_API_URL}/api/dashboard/public`)
       .then(response => response.json())
-      .then(data => setDashboardData(data));
+      .then(data => setDashboardData(data))
+      .catch(error => console.error('Error loading dashboard:', error));
   }, []);
 
   if (!dashboardData) return <div>Loading dashboard...</div>;
@@ -73,7 +75,7 @@ function PublicDashboard() {
         </button>
         
         <button 
-          onClick={() => window.open('/api/dashboard/export', '_blank')}
+          onClick={() => window.open(`${process.env.REACT_APP_API_URL}/api/dashboard/export`, '_blank')}
           style={{
             padding: '12px 24px',
             backgroundColor: '#28a745',
