@@ -1,8 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors'); // Add this line
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Add CORS configuration
+app.use(cors({
+  origin: ['https://plp-final-project-chi.vercel.app', 'http://localhost:3000'],
+  credentials: true
+}));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
