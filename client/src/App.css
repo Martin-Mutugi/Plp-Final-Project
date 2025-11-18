@@ -1772,3 +1772,60 @@ th {
   margin-top: 1.1428571em;
   margin-bottom: 1.1428571em;
 }
+/* Enhanced Chart Styles */
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Enhanced color utilities for charts */
+.text-amber {
+  color: var(--secondary-sun);
+}
+
+.text-purple {
+  color: #8B5CF6;
+}
+
+.text-purple-600 {
+  color: #9333EA;
+}
+
+/* Enhanced background colors for data visualization */
+.bg-emerald-light {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.bg-purple-50 {
+  background-color: #FAF5FF;
+}
+
+.border-purple-200 {
+  border-color: #E9D5FF;
+}
+
+/* Enhanced gradient backgrounds for icons */
+.from-sky {
+  --tw-gradient-from: #0EA5E9;
+}
+
+.to-ocean {
+  --tw-gradient-to: #1E40AF;
+}
+
+/* Enhanced text colors for white backgrounds */
+.text-emerald-100 {
+  color: rgba(16, 185, 129, 0.9);
+}
+
+.text-emerald-200 {
+  color: rgba(16, 185, 129, 0.7);
+}
+
+/* Enhanced border opacity */
+.border-opacity-20 {
+  border-opacity: 0.2;
+}
+
+.border-opacity-30 {
+  border-opacity: 0.3;
+}
