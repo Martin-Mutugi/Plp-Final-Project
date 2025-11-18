@@ -1652,3 +1652,49 @@ th {
 .hover-scale-102:hover {
   transform: scale(1.02);
 }
+/* Enhanced Consumer Tools Styles */
+.from-warning {
+  --tw-gradient-from: #F59E0B;
+}
+
+.to-orange-500 {
+  --tw-gradient-to: #F97316;
+}
+
+.from-info {
+  --tw-gradient-from: #3B82F6;
+}
+
+.to-blue-600 {
+  --tw-gradient-to: #2563EB;
+}
+
+.from-success {
+  --tw-gradient-from: #10B981;
+}
+
+.to-green-600 {
+  --tw-gradient-to: #059669;
+}
+
+/* Enhanced impact level colors */
+.bg-success-light {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.bg-warning-light {
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.bg-error-light {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.bg-info-light {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+/* Capitalize utility */
+.capitalize {
+  text-transform: capitalize;
+}
