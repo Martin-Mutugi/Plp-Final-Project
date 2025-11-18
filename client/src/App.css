@@ -1829,3 +1829,46 @@ th {
 .border-opacity-30 {
   border-opacity: 0.3;
 }
+/* Enhanced Chat History Styles */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Enhanced message bubbles for history */
+.max-w-80 {
+  max-width: 20rem;
+}
+
+.rounded-br-sm {
+  border-bottom-right-radius: 0.5rem;
+}
+
+.rounded-bl-sm {
+  border-bottom-left-radius: 0.5rem;
+}
+
+/* Enhanced session grouping */
+.from-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.05);
+}
+
+.to-teal-50 {
+  background-color: rgba(13, 148, 136, 0.05);
+}
+
+/* Enhanced text colors */
+.text-stone-light {
+  color: var(--neutral-stone-light);
+}
+
+/* Enhanced background colors */
+.bg-charcoal {
+  background-color: var(--neutral-charcoal);
+}
+
+.bg-opacity-10 {
+  opacity: 0.1;
+}
