@@ -3,6 +3,7 @@ import PublicDashboard from './PublicDashboard';
 import Login from './Login';
 import Register from './Register';
 import UserDashboard from './UserDashboard';
+import PaymentCallback from './components/PaymentCallback';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ThemeToggle from './components/ThemeToggle';
 import './App.css';
