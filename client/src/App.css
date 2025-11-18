@@ -1597,3 +1597,58 @@ th {
 .inline-flex {
   display: inline-flex;
 }
+/* Enhanced Farmer Tools Styles */
+.from-earth {
+  --tw-gradient-from: #B45309;
+}
+
+.to-brown-600 {
+  --tw-gradient-to: #92400E;
+}
+
+.from-warning {
+  --tw-gradient-from: #F59E0B;
+}
+
+.to-orange-500 {
+  --tw-gradient-to: #F97316;
+}
+
+.from-info {
+  --tw-gradient-from: #3B82F6;
+}
+
+.to-blue-600 {
+  --tw-gradient-to: #2563EB;
+}
+
+.from-accent-sky {
+  --tw-gradient-from: var(--accent-sky);
+}
+
+.to-accent-ocean {
+  --tw-gradient-to: var(--accent-ocean);
+}
+
+/* Enhanced sticky positioning */
+.sticky {
+  position: sticky;
+}
+
+.top-4 {
+  top: var(--space-4);
+}
+
+/* Enhanced form textarea with icon */
+.form-textarea.pl-10 {
+  padding-left: var(--space-10);
+}
+
+/* Scale utilities for hover effects */
+.scale-102 {
+  transform: scale(1.02);
+}
+
+.hover-scale-102:hover {
+  transform: scale(1.02);
+}
