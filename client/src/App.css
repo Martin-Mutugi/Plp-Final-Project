@@ -1340,3 +1340,34 @@ p {
 .btn:disabled:hover::before {
   left: -100%;
 }
+/* Enhanced Benefits Card Gradient */
+.from-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.05);
+}
+
+.to-teal-50 {
+  background-color: rgba(13, 148, 136, 0.05);
+}
+
+.border-emerald-200 {
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+/* Flex utilities for icons */
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.mt-0\.5 {
+  margin-top: 0.125rem;
+}
+
+/* Trust indicators grid */
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Enhanced text colors */
+.text-forest {
+  color: var(--primary-forest);
+}
