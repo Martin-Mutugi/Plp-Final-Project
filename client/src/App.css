@@ -1281,3 +1281,62 @@ p {
   .hidden-desktop { display: block; }
   .block-mobile { display: block; }
 }
+/* Additional Utilities for Login Component */
+.space-y-6 > * + * {
+  margin-top: var(--space-6);
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-translate-y-1\/2 {
+  transform: translateY(-50%);
+}
+
+.left-3 {
+  left: var(--space-3);
+}
+
+.top-1\/2 {
+  top: 50%;
+}
+
+.pl-10 {
+  padding-left: var(--space-10);
+}
+
+.bg-snow {
+  background: var(--neutral-snow);
+}
+
+.text-error {
+  color: var(--error);
+}
+
+.text-stone-light {
+  color: var(--neutral-stone-light);
+}
+
+.text-emerald-dark {
+  color: var(--primary-emerald-dark);
+}
+
+/* Enhanced loading state for buttons */
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn:disabled:hover::before {
+  left: -100%;
+}
