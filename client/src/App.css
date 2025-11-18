@@ -92,6 +92,107 @@
   --gradient-premium: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
 }
 
+/* ===== THEME SYSTEM ===== */
+:root {
+  /* Light Theme (Default) */
+  --bg-primary: var(--neutral-white);
+  --bg-secondary: var(--neutral-snow);
+  --bg-tertiary: var(--neutral-cloud);
+  --text-primary: var(--neutral-ink);
+  --text-secondary: var(--neutral-charcoal);
+  --text-tertiary: var(--neutral-stone);
+  --border-primary: var(--neutral-cloud);
+  --border-secondary: var(--neutral-cloud-dark);
+  --shadow-theme: var(--shadow-md);
+}
+
+[data-theme="dark"] {
+  /* Dark Theme */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #e2e8f0;
+  --text-tertiary: #94a3b8;
+  --border-primary: #334155;
+  --border-secondary: #475569;
+  --shadow-theme: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="green"] {
+  /* Green Theme */
+  --bg-primary: #f0fdf4;
+  --bg-secondary: #dcfce7;
+  --bg-tertiary: #bbf7d0;
+  --text-primary: #052e16;
+  --text-secondary: #14532d;
+  --text-tertiary: #166534;
+  --border-primary: #bbf7d0;
+  --border-secondary: #86efac;
+  --shadow-theme: 0 4px 6px -1px rgba(5, 46, 22, 0.1), 0 2px 4px -1px rgba(5, 46, 22, 0.06);
+}
+
+[data-theme="blue"] {
+  /* Blue Theme */
+  --bg-primary: #eff6ff;
+  --bg-secondary: #dbeafe;
+  --bg-tertiary: #bfdbfe;
+  --text-primary: #172554;
+  --text-secondary: #1e40af;
+  --text-tertiary: #2563eb;
+  --border-primary: #bfdbfe;
+  --border-secondary: #93c5fd;
+  --shadow-theme: 0 4px 6px -1px rgba(23, 37, 84, 0.1), 0 2px 4px -1px rgba(23, 37, 84, 0.06);
+}
+
+/* Update existing styles to use theme variables */
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.card, .card-elevated {
+  background: var(--bg-primary);
+  border-color: var(--border-primary);
+  box-shadow: var(--shadow-theme);
+}
+
+.navbar {
+  background: var(--bg-primary);
+  border-color: var(--border-primary);
+}
+
+.form-input, .form-select, .form-textarea {
+  background: var(--bg-primary);
+  border-color: var(--border-primary);
+  color: var(--text-primary);
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--primary-emerald);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-primary);
+}
+
+.btn-outline:hover {
+  border-color: var(--primary-emerald);
+  color: var(--primary-emerald);
+}
+
+.text-charcoal { color: var(--text-secondary) !important; }
+.text-stone { color: var(--text-tertiary) !important; }
+.text-ink { color: var(--text-primary) !important; }
+
+.bg-white { background: var(--bg-primary) !important; }
+.bg-snow { background: var(--bg-secondary) !important; }
+.bg-cloud { background: var(--bg-tertiary) !important; }
+
+.border-cloud { border-color: var(--border-primary) !important; }
+
 /* ===== MODERN CSS RESET ===== */
 *, *::before, *::after {
   box-sizing: border-box;

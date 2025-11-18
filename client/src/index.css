@@ -1,13 +1,344 @@
+/* ===== GLOBAL STYLES WITH THEME SUPPORT ===== */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ensure specific elements transition smoothly */
+body, .card, .btn, .form-input, .navbar, .footer, 
+.chat-container, .message-bubble, .stat-card,
+.sdg-badge, .impact-meter, .loading {
+  transition: background-color 0.3s ease, border-color 0.3s ease, 
+              color 0.3s ease, box-shadow 0.3s ease, 
+              transform 0.2s ease, opacity 0.3s ease;
+}
+
+/* Base body styles */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
 }
 
+/* Code block styles */
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', 'Courier New',
     monospace;
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  border: 1px solid var(--border-primary);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--primary-emerald);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Selection styles */
+::selection {
+  background: var(--primary-emerald);
+  color: white;
+}
+
+::-moz-selection {
+  background: var(--primary-emerald);
+  color: white;
+}
+
+/* Scrollbar styling for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-emerald);
+}
+
+/* Prevent transitions during initial page load */
+.preload * {
+  transition: none !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --primary-emerald: #047857;
+    --primary-emerald-dark: #065F46;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+  
+  .navbar, .footer, .btn, .theme-toggle-btn {
+    display: none !important;
+  }
+}
+
+/* Ensure images are responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Remove button and input default styles */
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Remove default button styles */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Link styles */
+a {
+  color: var(--primary-emerald);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary-emerald-dark);
+}
+
+/* Loading state for the entire app */
+.app-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+/* Error boundary fallback */
+.app-error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.app-error h1 {
+  color: var(--error);
+  margin-bottom: 1rem;
+}
+
+/* Utility classes for theme transitions */
+.theme-transition {
+  transition: all 0.3s ease;
+}
+
+.no-transition {
+  transition: none !important;
+}
+
+/* Ensure form elements inherit theme colors */
+input, textarea, select {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* Custom selection for form elements */
+input::selection, textarea::selection {
+  background: var(--primary-emerald);
+  color: white;
+}
+
+/* Disabled state styles */
+:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Focus styles for form elements */
+input:focus, textarea:focus, select:focus {
+  border-color: var(--primary-emerald);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Custom styles for code blocks in dark mode */
+[data-theme="dark"] code {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+/* Custom styles for code blocks in light mode */
+[data-theme="light"] code {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-primary);
+}
+
+/* Ensure iframes and embedded content are responsive */
+iframe, embed, object {
+  max-width: 100%;
+}
+
+/* Table styles that work with themes */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background: var(--bg-primary);
+}
+
+th, td {
+  border: 1px solid var(--border-primary);
+  padding: 0.75rem;
+  text-align: left;
+}
+
+th {
+  background: var(--bg-secondary);
+  font-weight: 600;
+}
+
+/* Custom scrollbar for specific containers */
+.scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-tertiary) var(--bg-secondary);
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+}
+
+/* Loading animation that works with themes */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Ensure transitions work properly with CSS transforms */
+.transform {
+  transition: transform 0.2s ease;
+}
+
+/* Custom focus styles for buttons */
+.btn:focus-visible {
+  outline: 2px solid var(--primary-emerald);
+  outline-offset: 2px;
+}
+
+/* Ensure theme transitions work in all modern browsers */
+@media (prefers-reduced-motion: no-preference) {
+  .theme-transition-fast {
+    transition: all 0.15s ease;
+  }
+  
+  .theme-transition-normal {
+    transition: all 0.3s ease;
+  }
+  
+  .theme-transition-slow {
+    transition: all 0.5s ease;
+  }
+}
+
+/* Support for system font stacks */
+.system-font {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
+               'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Ensure proper text rendering */
+.optimize-legibility {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* High DPI screen support */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Mobile viewport fixes */
+@viewport {
+  width: device-width;
+  zoom: 1.0;
+}
+
+@-ms-viewport {
+  width: device-width;
+}
+
+/* Ensure proper box sizing inheritance */
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
 }
