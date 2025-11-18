@@ -1698,3 +1698,77 @@ th {
 .capitalize {
   text-transform: capitalize;
 }
+/* Enhanced Premium Dashboard Styles */
+.from-purple-500 {
+  --tw-gradient-from: #8B5CF6;
+}
+
+.to-pink-500 {
+  --tw-gradient-to: #EC4899;
+}
+
+.to-pink-600 {
+  --tw-gradient-to: #DB2777;
+}
+
+.from-red-500 {
+  --tw-gradient-from: #EF4444;
+}
+
+.to-red-600 {
+  --tw-gradient-to: #DC2626;
+}
+
+.to-red-700 {
+  --tw-gradient-to: #B91C1C;
+}
+
+.from-blue-400 {
+  --tw-gradient-from: #60A5FA;
+}
+
+.to-cyan-500 {
+  --tw-gradient-to: #06B6D4;
+}
+
+/* Enhanced background colors for support sections */
+.bg-red-50 { background-color: #FEF2F2; }
+.border-red-200 { border-color: #FECACA; }
+.text-red-800 { color: #991B1B; }
+
+.bg-blue-50 { background-color: #EFF6FF; }
+.border-blue-200 { border-color: #BFDBFE; }
+.text-blue-800 { color: #1E40AF; }
+
+.bg-green-50 { background-color: #F0FDF4; }
+.border-green-200 { border-color: #BBF7D0; }
+.text-green-800 { color: #166534; }
+
+.bg-yellow-50 { background-color: #FEFCE8; }
+.border-yellow-200 { border-color: #FEF08A; }
+.text-yellow-700 { color: #A16207; }
+
+/* Circular progress indicator */
+.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-rotate-45 {
+  --tw-rotate: -45deg;
+}
+
+/* Enhanced prose styling for text content */
+.prose {
+  color: var(--neutral-charcoal);
+  max-width: 65ch;
+}
+
+.prose-sm {
+  font-size: 0.875rem;
+  line-height: 1.7142857;
+}
+
+.prose-sm p {
+  margin-top: 1.1428571em;
+  margin-bottom: 1.1428571em;
+}
