@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import './App.css';
 
 function ChatInterface({ user, setUser }) {
   const [message, setMessage] = useState('');
@@ -129,49 +130,58 @@ function ChatInterface({ user, setUser }) {
       <div className="chat-sidebar">
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="mb-4">
+          <div className="mb-6">
             <button 
               onClick={startNewChat}
-              className="btn btn-primary w-full mb-3"
+              className="btn btn-primary w-full mb-4 btn-lg"
             >
-              <span className="text-lg mr-2">+</span>
-              New Chat
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-lg">+</span>
+                <span>New Chat Session</span>
+              </div>
             </button>
             
-            <h4 className="font-semibold text-charcoal mb-3 flex items-center gap-2">
-              <span>💬</span>
-              Chat History
-            </h4>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-gradient-emerald rounded-xl flex items-center justify-center">
+                <span className="text-white">💬</span>
+              </div>
+              <div>
+                <h4 className="font-semibold text-charcoal">Chat History</h4>
+                <p className="text-xs text-stone">{sessions.length} sessions</p>
+              </div>
+            </div>
           </div>
 
           {/* Sessions List */}
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto space-y-3">
             {sessions.length === 0 ? (
-              <div className="text-center text-stone p-4">
-                <div className="text-2xl mb-2">📚</div>
-                <p className="text-sm">No previous chats</p>
-                <p className="text-xs">Start a conversation to see history here</p>
+              <div className="text-center p-6">
+                <div className="w-16 h-16 bg-snow rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">📚</span>
+                </div>
+                <p className="text-sm text-stone mb-1">No previous chats</p>
+                <p className="text-xs text-stone-light">Start a conversation to see history here</p>
               </div>
             ) : (
               sessions.map(session => (
                 <div 
                   key={session._id}
                   onClick={() => loadChatSession(session._id)}
-                  className={`p-3 mb-2 rounded-lg cursor-pointer transition-all ${
+                  className={`p-4 rounded-xl cursor-pointer transition-all border ${
                     currentSessionId === session._id 
-                      ? 'bg-emerald bg-opacity-10 border border-emerald border-opacity-30' 
-                      : 'bg-cloud hover:bg-cloud-dark border border-transparent'
+                      ? 'bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald shadow-md' 
+                      : 'bg-snow border-cloud hover:border-emerald hover:shadow-sm'
                   }`}
                 >
-                  <div className="flex justify-between items-start mb-1">
-                    <div className="text-xs text-stone">
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="text-xs text-stone-light">
                       {new Date(session.lastTimestamp).toLocaleDateString()}
                     </div>
-                    <span className="text-xs bg-charcoal bg-opacity-10 text-charcoal px-1 rounded">
-                      {session.messageCount}
+                    <span className="text-xs bg-charcoal bg-opacity-10 text-charcoal px-2 py-1 rounded-lg font-medium">
+                      {session.messageCount} messages
                     </span>
                   </div>
-                  <div className="text-sm font-medium text-charcoal line-clamp-2">
+                  <div className="text-sm font-medium text-charcoal line-clamp-2 leading-relaxed">
                     {session.lastMessage || 'New conversation'}
                   </div>
                 </div>
@@ -180,12 +190,31 @@ function ChatInterface({ user, setUser }) {
           </div>
 
           {/* Footer */}
-          <div className="pt-4 border-t border-cloud">
-            <div className="text-xs text-stone text-center">
+          <div className="pt-6 border-t border-cloud mt-4">
+            <div className="text-center p-4 bg-snow rounded-xl border border-cloud">
               {user.subscriptionTier === 'free' ? (
-                <p>{6 - (user.promptsUsed || 0)} prompts remaining</p>
+                <div className="space-y-2">
+                  <div className="text-sm font-semibold text-warning">Free Plan</div>
+                  <div className="text-xs text-stone">
+                    {6 - (user.promptsUsed || 0)} prompts remaining
+                  </div>
+                  <div className="w-full bg-cloud rounded-full h-2">
+                    <div 
+                      className="bg-warning h-2 rounded-full transition-all"
+                      style={{ width: `${((user.promptsUsed || 0) / 6) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
               ) : (
-                <p>✨ Unlimited AI access</p>
+                <div className="space-y-2">
+                  <div className="text-sm font-semibold text-success flex items-center justify-center gap-1">
+                    <span>✨</span>
+                    <span>Unlimited Access</span>
+                  </div>
+                  <div className="text-xs text-stone">
+                    {user.subscriptionTier === 'pro' ? 'Pro Plan' : 'Premium Plan'}
+                  </div>
+                </div>
               )}
             </div>
           </div>
@@ -195,33 +224,40 @@ function ChatInterface({ user, setUser }) {
       {/* Chat Area */}
       <div className="chat-main">
         {/* Chat Header */}
-        <div className="chat-header p-4 border-b border-cloud bg-white">
+        <div className="chat-header p-6 border-b border-cloud bg-white">
           <div className="flex items-center justify-between">
-            <h3 className="font-semibold text-charcoal flex items-center gap-2">
-              <span className="text-lg">🌱</span>
-              AgriSmart AI Assistant
-            </h3>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gradient-emerald rounded-2xl flex items-center justify-center shadow-lg">
+                <span className="text-xl text-white">🌱</span>
+              </div>
+              <div>
+                <h3 className="font-bold text-charcoal text-lg">AgriSmart AI Assistant</h3>
+                <p className="text-sm text-stone">Your sustainable agriculture expert</p>
+              </div>
+            </div>
             
             {/* Language Selector for Premium Users */}
             {user.subscriptionTier !== 'free' && (
-              <div className="flex items-center gap-3">
-                <label className="text-sm font-medium text-charcoal">Language:</label>
-                <select 
-                  value={selectedLanguage} 
-                  onChange={(e) => setSelectedLanguage(e.target.value)}
-                  className="form-select text-sm"
-                  style={{ width: 'auto', minWidth: '120px' }}
-                >
-                  <option value="english">English</option>
-                  <option value="spanish">Spanish</option>
-                  <option value="french">French</option>
-                  <option value="swahili">Swahili</option>
-                  <option value="hindi">Hindi</option>
-                  <option value="arabic">Arabic</option>
-                  <option value="portuguese">Portuguese</option>
-                </select>
-                <span className="sdg-badge text-xs">
-                  🌍 Premium
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <label className="text-sm font-medium text-charcoal">Language:</label>
+                  <select 
+                    value={selectedLanguage} 
+                    onChange={(e) => setSelectedLanguage(e.target.value)}
+                    className="form-select text-sm"
+                    style={{ width: 'auto', minWidth: '140px' }}
+                  >
+                    <option value="english">English</option>
+                    <option value="spanish">Spanish</option>
+                    <option value="french">French</option>
+                    <option value="swahili">Swahili</option>
+                    <option value="hindi">Hindi</option>
+                    <option value="arabic">Arabic</option>
+                    <option value="portuguese">Portuguese</option>
+                  </select>
+                </div>
+                <span className="sdg-badge sdg-badge-premium text-xs">
+                  🌍 Multi-Language
                 </span>
               </div>
             )}
@@ -231,40 +267,35 @@ function ChatInterface({ user, setUser }) {
         {/* Messages Area */}
         <div className="chat-messages">
           {chatHistory.length === 0 && !isLoading && (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🌾</div>
-              <h3 className="text-xl font-semibold text-charcoal mb-2">
+            <div className="text-center py-16 px-6">
+              <div className="w-24 h-24 bg-gradient-to-r from-emerald to-teal rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <span className="text-4xl">🌾</span>
+              </div>
+              <h3 className="text-2xl font-bold text-charcoal mb-4">
                 Welcome to AgriSmart AI
               </h3>
-              <p className="text-stone max-w-md mx-auto">
+              <p className="text-lg text-stone max-w-2xl mx-auto mb-8 leading-relaxed">
                 Ask me anything about sustainable agriculture, crop planning, 
-                climate-smart practices, or food waste reduction.
+                climate-smart practices, or food waste reduction. I'm here to help you make smarter, more sustainable choices.
               </p>
-              <div className="mt-6 grid grid-2 gap-3 max-w-lg mx-auto">
-                <button 
-                  onClick={() => setMessage("How can I improve soil health for maize cultivation?")}
-                  className="btn btn-outline text-sm text-left justify-start"
-                >
-                  🌱 Soil health tips
-                </button>
-                <button 
-                  onClick={() => setMessage("What are climate-smart irrigation practices?")}
-                  className="btn btn-outline text-sm text-left justify-start"
-                >
-                  💧 Irrigation advice
-                </button>
-                <button 
-                  onClick={() => setMessage("How can I reduce food waste at home?")}
-                  className="btn btn-outline text-sm text-left justify-start"
-                >
-                  🗑️ Reduce food waste
-                </button>
-                <button 
-                  onClick={() => setMessage("Best sustainable crops for my region")}
-                  className="btn btn-outline text-sm text-left justify-start"
-                >
-                  🌍 Regional crops
-                </button>
+              <div className="grid grid-2 gap-4 max-w-xl mx-auto">
+                {[
+                  { icon: '🌱', text: 'Soil health tips for maize cultivation' },
+                  { icon: '💧', text: 'Climate-smart irrigation practices' },
+                  { icon: '🗑️', text: 'Reduce food waste at home' },
+                  { icon: '🌍', text: 'Best sustainable crops for my region' }
+                ].map((suggestion, index) => (
+                  <button 
+                    key={index}
+                    onClick={() => setMessage(suggestion.text)}
+                    className="btn btn-outline text-left justify-start p-4 hover:scale-105 transition-transform"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl">{suggestion.icon}</span>
+                      <span className="text-sm">{suggestion.text}</span>
+                    </div>
+                  </button>
+                ))}
               </div>
             </div>
           )}
@@ -272,20 +303,38 @@ function ChatInterface({ user, setUser }) {
           {chatHistory.map((chat, index) => (
             <div 
               key={index} 
-              className={`message ${chat.type === 'user' ? 'message-user' : 'message-ai'}`}
+              className={`message ${chat.type === 'user' ? 'message-user' : 'message-ai'} fade-in`}
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="message-bubble">
+              {chat.type === 'ai' && (
+                <div className="w-8 h-8 bg-gradient-emerald rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <span className="text-white text-xs">🌱</span>
+                </div>
+              )}
+              <div className={`message-bubble ${chat.type === 'user' ? 'message-user-bubble' : 'message-ai-bubble'}`}>
                 {chat.content}
               </div>
+              {chat.type === 'user' && (
+                <div className="w-8 h-8 bg-gradient-to-r from-sky to-ocean rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <span className="text-white text-xs">👤</span>
+                </div>
+              )}
             </div>
           ))}
           
           {isLoading && (
-            <div className="message message-ai">
-              <div className="message-bubble">
-                <div className="flex items-center gap-2">
-                  <div className="loading" style={{ width: '16px', height: '16px' }}></div>
-                  <span className="text-stone">Thinking...</span>
+            <div className="message message-ai fade-in">
+              <div className="w-8 h-8 bg-gradient-emerald rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <span className="text-white text-xs">🌱</span>
+              </div>
+              <div className="message-bubble message-ai-bubble">
+                <div className="flex items-center gap-3">
+                  <div className="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <span className="text-stone">Analyzing your question...</span>
                 </div>
               </div>
             </div>
@@ -296,34 +345,45 @@ function ChatInterface({ user, setUser }) {
 
         {/* Input Area */}
         <div className="chat-input-container">
-          <form onSubmit={handleSendMessage} className="flex gap-3">
-            <input 
-              type="text" 
-              value={message} 
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Ask about sustainable agriculture, crop planning, climate practices..."
-              className="form-input flex-1"
-              disabled={isLoading}
-            />
+          <form onSubmit={handleSendMessage} className="flex gap-4">
+            <div className="flex-1 relative">
+              <input 
+                type="text" 
+                value={message} 
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Ask about sustainable agriculture, crop planning, climate practices..."
+                className="form-input w-full pl-12 pr-4 py-4 text-lg rounded-2xl"
+                disabled={isLoading}
+              />
+              <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-stone-light text-xl">💭</span>
+            </div>
             <button 
               type="submit" 
-              className="btn btn-primary px-6"
+              className="btn btn-primary px-8 py-4 rounded-2xl btn-lg"
               disabled={isLoading || !message.trim()}
             >
               {isLoading ? (
-                <div className="flex items-center gap-2">
-                  <div className="loading" style={{ width: '16px', height: '16px' }}></div>
-                  Sending...
+                <div className="flex items-center gap-3">
+                  <div className="loading" style={{ width: '20px', height: '20px' }}></div>
+                  <span>Sending...</span>
                 </div>
               ) : (
-                'Send'
+                <div className="flex items-center gap-2">
+                  <span>🚀</span>
+                  <span>Send</span>
+                </div>
               )}
             </button>
           </form>
           
           {/* Quick Tips */}
-          <div className="mt-3 text-xs text-stone text-center">
-            💡 Try asking about: organic farming, pest management, water conservation, or sustainable diets
+          <div className="mt-4 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-snow rounded-xl border border-cloud">
+              <span className="text-emerald">💡</span>
+              <span className="text-sm text-stone">
+                Try asking about: organic farming, pest management, water conservation, or sustainable diets
+              </span>
+            </div>
           </div>
         </div>
       </div>

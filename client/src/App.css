@@ -1427,3 +1427,110 @@ p {
   transform: translateY(-4px);
   box-shadow: var(--shadow-xl);
 }
+/* Enhanced Chat Styles */
+.chat-container {
+  background: var(--neutral-white);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  height: 70vh;
+  display: flex;
+  border: 1px solid var(--neutral-cloud);
+  min-height: 600px;
+}
+
+.chat-sidebar {
+  width: 320px;
+  background: var(--neutral-snow);
+  border-right: 1px solid var(--neutral-cloud);
+  padding: var(--space-6);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  background: var(--neutral-white);
+  border-bottom: 1px solid var(--neutral-cloud);
+  padding: var(--space-6);
+}
+
+.chat-messages {
+  flex: 1;
+  padding: var(--space-6);
+  overflow-y: auto;
+  background: var(--neutral-white);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.chat-input-container {
+  padding: var(--space-6);
+  border-top: 1px solid var(--neutral-cloud);
+  background: var(--neutral-white);
+}
+
+/* Enhanced Message Styles */
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  animation: messageSlide 0.3s ease-out;
+}
+
+.message-user {
+  justify-content: flex-end;
+}
+
+.message-ai {
+  justify-content: flex-start;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-2xl);
+  position: relative;
+  line-height: 1.5;
+  font-size: var(--text-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+.message-user-bubble {
+  background: var(--gradient-emerald);
+  color: var(--neutral-white);
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+.message-ai-bubble {
+  background: var(--neutral-cloud);
+  color: var(--neutral-ink);
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Enhanced animations */
+@keyframes messageSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
