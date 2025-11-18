@@ -1401,3 +1401,29 @@ p {
 
 /* Flex wrap for responsive badges */
 .flex-wrap { flex-wrap: wrap; }
+/* Enhanced Gradient Utilities */
+.from-purple-500 { --tw-gradient-from: #8B5CF6; }
+.to-pink-500 { --tw-gradient-to: #EC4899; }
+
+.from-warning-light { --tw-gradient-from: rgba(245, 158, 11, 0.1); }
+.to-orange-50 { --tw-gradient-to: rgba(254, 215, 170, 0.1); }
+
+/* Enhanced button styles for quick actions */
+.btn-justify-start {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+/* Hover scale effects */
+.hover-scale-105:hover {
+  transform: scale(1.05);
+}
+
+/* Additional color utilities */
+.text-orange-50 { color: #FFFBEB; }
+
+/* Enhanced card interactions */
+.card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
