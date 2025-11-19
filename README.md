@@ -1,7 +1,7 @@
 # 🌍 AgriSmart SDG Platform
 
 ## 🌐 Deployment Links
-- **Frontend (Vercel):** [Live Demo](https://plp-final-project-chi.vercel.app)  
+- **Frontend (Vercel):** [Live Demo](https://finale-plp-project-chi.vercel.app)  
 
 - **Backend (Render):** [API Endpoint](https://sdg-platform-backend.onrender.com)  
 - **Pitch Deck:** [Investor Pitch Deck](https://gamma.app/docs/AgriSmart-SDG-q3iw1xaqloj0oaf)  
