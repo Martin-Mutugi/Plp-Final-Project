@@ -12,32 +12,62 @@ function Login(props) {
     setError('');
     setIsLoading(true);
     
-    const apiUrl = `${process.env.REACT_APP_API_URL}/api/auth/login`;
-    
     try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
+      // Mock authentication - simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      if (response.ok) {
-        // Store token and user data
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        props.setUser(data.user);
+      // Validate input
+      if (!email || !password) {
+        throw new Error('Please fill in all fields');
+      }
+      
+      if (!email.includes('@')) {
+        throw new Error('Please enter a valid email address');
+      }
+      
+      // Check mock users in localStorage
+      const existingUsers = JSON.parse(localStorage.getItem('mockUsers') || '[]');
+      const user = existingUsers.find(u => u.email === email && u.password === password);
+      
+      if (user) {
+        // Create user object for app state (without password)
+        const userData = {
+          id: user.id,
+          email: user.email,
+          subscriptionTier: user.subscriptionTier || 'free',
+          createdAt: user.createdAt
+        };
+        
+        // Store token and user data (mock token)
+        const mockToken = `mock_token_${Date.now()}`;
+        localStorage.setItem('token', mockToken);
+        localStorage.setItem('user', JSON.stringify(userData));
+        props.setUser(userData);
+        
+        // Success feedback
+        console.log('Login successful:', userData);
       } else {
-        setError(data.message || 'Login failed. Please try again.');
+        // Check if email exists but password is wrong
+        const emailExists = existingUsers.find(u => u.email === email);
+        if (emailExists) {
+          throw new Error('Invalid password. Please try again.');
+        } else {
+          throw new Error('No account found with this email. Please register first.');
+        }
       }
     } catch (error) {
-      setError('Network error. Please check your connection and try again.');
+      setError(error.message || 'Login failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleResetPassword = () => {
+    alert('Password reset feature will be available when backend is connected.');
+  };
+
+  const handleContactSupport = () => {
+    alert('Please email support@agrismart-sdg.org for assistance.');
   };
 
   return (
@@ -55,6 +85,19 @@ function Login(props) {
             <p className="text-lg text-stone leading-relaxed">
               Sign in to continue your sustainable agriculture journey
             </p>
+          </div>
+
+          {/* Demo Notice */}
+          <div className="mb-6 p-4 bg-info bg-opacity-10 rounded-lg border border-info border-opacity-20">
+            <div className="flex items-start gap-3">
+              <span className="text-info text-lg">💡</span>
+              <div>
+                <p className="text-sm font-semibold text-info">Demo Mode Active</p>
+                <p className="text-xs text-stone mt-1">
+                  Using mock authentication. Register first if you don't have an account.
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Error Message */}
@@ -123,6 +166,13 @@ function Login(props) {
             </button>
           </form>
 
+          {/* Test Account Hint */}
+          <div className="mt-4 p-3 bg-cloud rounded-lg">
+            <p className="text-xs text-stone text-center">
+              <strong>Tip:</strong> Register first to create an account, then login with the same credentials.
+            </p>
+          </div>
+
           {/* Divider */}
           <div className="flex items-center my-8">
             <div className="flex-1 h-px bg-cloud"></div>
@@ -151,11 +201,17 @@ function Login(props) {
           <div className="mt-8 p-4 bg-snow rounded-xl border border-cloud">
             <p className="text-xs text-stone text-center">
               Having trouble signing in?{' '}
-              <button className="text-emerald hover:text-emerald-dark font-semibold">
+              <button 
+                onClick={handleResetPassword}
+                className="text-emerald hover:text-emerald-dark font-semibold"
+              >
                 Reset your password
               </button>
               {' or '}
-              <button className="text-emerald hover:text-emerald-dark font-semibold">
+              <button 
+                onClick={handleContactSupport}
+                className="text-emerald hover:text-emerald-dark font-semibold"
+              >
                 contact support
               </button>
             </p>

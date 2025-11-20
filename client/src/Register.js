@@ -13,24 +13,50 @@ function Register(props) {
     setIsLoading(true);
     
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
+      // Mock registration - simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      if (response.ok) {
-        alert('Registration successful! Please log in.');
-        props.setCurrentView('login');
-      } else {
-        setError(data.message || 'Registration failed. Please try again.');
+      // Validate input
+      if (!email || !password) {
+        throw new Error('Please fill in all fields');
       }
+      
+      if (password.length < 8) {
+        throw new Error('Password must be at least 8 characters long');
+      }
+      
+      if (!email.includes('@')) {
+        throw new Error('Please enter a valid email address');
+      }
+      
+      // Check if user already exists in localStorage
+      const existingUsers = JSON.parse(localStorage.getItem('mockUsers') || '[]');
+      const userExists = existingUsers.find(user => user.email === email);
+      
+      if (userExists) {
+        throw new Error('An account with this email already exists');
+      }
+      
+      // Create new user
+      const newUser = {
+        id: Date.now().toString(),
+        email: email,
+        subscriptionTier: 'free',
+        createdAt: new Date().toISOString(),
+        // In a real app, you'd hash the password
+        password: password // Note: In production, never store plain text passwords
+      };
+      
+      // Save to mock database (localStorage)
+      existingUsers.push(newUser);
+      localStorage.setItem('mockUsers', JSON.stringify(existingUsers));
+      
+      // Success
+      alert('🎉 Registration successful! Please log in to continue.');
+      props.setCurrentView('login');
+      
     } catch (error) {
-      setError('Network error. Please check your connection and try again.');
+      setError(error.message || 'Registration failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -95,6 +121,7 @@ function Register(props) {
                   placeholder="Create a secure password"
                   required 
                   disabled={isLoading}
+                  minLength="8"
                 />
                 <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-stone-light">🔒</span>
               </div>
@@ -122,6 +149,19 @@ function Register(props) {
               )}
             </button>
           </form>
+
+          {/* Demo Notice */}
+          <div className="mt-6 p-4 bg-info bg-opacity-10 rounded-lg border border-info border-opacity-20">
+            <div className="flex items-start gap-3">
+              <span className="text-info text-lg">💡</span>
+              <div>
+                <p className="text-sm font-semibold text-info">Demo Mode Active</p>
+                <p className="text-xs text-stone mt-1">
+                  Using mock registration. Your account will be stored locally in this browser.
+                </p>
+              </div>
+            </div>
+          </div>
 
           {/* Benefits Card */}
           <div className="mt-8 p-6 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl border border-emerald-200">
