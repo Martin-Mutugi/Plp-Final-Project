@@ -15,22 +15,22 @@ function UserDashboard({ user, setUser }) {
 
   // Show upgrade interface if user clicks upgrade
   if (showUpgrade) {
-    return <SubscriptionUpgrade user={user} setUser={setUser} />;
+    return <SubscriptionUpgrade user={user} setUser={setUser} onBack={() => setShowUpgrade(false)} />;
   }
 
   // Show farmer tools if user clicks farmer tools
   if (showFarmerTools) {
-    return <FarmerTools user={user} />;
+    return <FarmerTools user={user} onBack={() => setShowFarmerTools(false)} />;
   }
 
   // Show consumer tools if user clicks consumer tools
   if (showConsumerTools) {
-    return <ConsumerTools user={user} />;
+    return <ConsumerTools user={user} onBack={() => setShowConsumerTools(false)} />;
   }
 
   // Show premium dashboard if user clicks premium features
   if (showPremiumDashboard) {
-    return <PremiumDashboard user={user} />;
+    return <PremiumDashboard user={user} onBack={() => setShowPremiumDashboard(false)} />;
   }
 
   const getTierColor = (tier) => {

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
 
-function SubscriptionUpgrade({ user, setUser }) {
+function SubscriptionUpgrade({ user, setUser, onBack }) {
   const [selectedPlan, setSelectedPlan] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [billingPeriod, setBillingPeriod] = useState('monthly');
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const plans = {
     premium: {
@@ -51,24 +52,42 @@ function SubscriptionUpgrade({ user, setUser }) {
 
     setIsProcessing(true);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/subscriptions/initialize`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: user.id,
-          plan: plan,
-          billingPeriod: billingPeriod
-        }),
-      });
-
-      const data = await response.json();
+      // Mock payment simulation - replace the failing API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
-      if (response.ok) {
-        window.location.href = data.authorization_url;
+      // Simulate successful payment
+      const paymentSuccessful = true; // In real app, this would come from payment processor
+      
+      if (paymentSuccessful) {
+        // Update user subscription in localStorage
+        const updatedUser = {
+          ...user,
+          subscriptionTier: plan,
+          upgradedAt: new Date().toISOString()
+        };
+        
+        // Update in localStorage
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        
+        // Update mock users data
+        const existingUsers = JSON.parse(localStorage.getItem('mockUsers') || '[]');
+        const userIndex = existingUsers.findIndex(u => u.email === user.email);
+        if (userIndex !== -1) {
+          existingUsers[userIndex].subscriptionTier = plan;
+          existingUsers[userIndex].upgradedAt = new Date().toISOString();
+          localStorage.setItem('mockUsers', JSON.stringify(existingUsers));
+        }
+        
+        // Update app state
+        setUser(updatedUser);
+        setShowSuccess(true);
+        
+        // Show success message
+        setTimeout(() => {
+          if (onBack) onBack();
+        }, 3000);
       } else {
-        alert('Payment initialization failed: ' + data.error);
+        alert('Payment simulation failed. Please try again.');
       }
     } catch (error) {
       alert('Upgrade error: ' + error.message);
@@ -91,10 +110,56 @@ function SubscriptionUpgrade({ user, setUser }) {
     return 0;
   };
 
+  // Success Modal
+  if (showSuccess) {
+    return (
+      <div className="container py-8">
+        <div className="text-center fade-in">
+          <div className="flex justify-center mb-6">
+            <div className="w-24 h-24 bg-gradient-emerald rounded-2xl flex items-center justify-center shadow-lg">
+              <span className="text-4xl">🎉</span>
+            </div>
+          </div>
+          <h1 className="mb-4">Welcome to {plans[selectedPlan]?.name}!</h1>
+          <p className="text-lg text-stone mb-8 max-w-2xl mx-auto leading-relaxed">
+            Your subscription has been successfully activated. You now have access to all {plans[selectedPlan]?.name} features. 
+            Redirecting you back to your dashboard...
+          </p>
+          
+          <div className="card-elevated inline-block max-w-md p-8">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="w-16 h-16 bg-success-light rounded-2xl flex items-center justify-center">
+                <span className="text-2xl text-success">✓</span>
+              </div>
+              <div className="text-left">
+                <h4 className="font-semibold text-charcoal">Subscription Activated</h4>
+                <p className="text-sm text-stone">{plans[selectedPlan]?.name} Plan</p>
+              </div>
+            </div>
+            
+            <div className="loading mx-auto mb-4"></div>
+            <p className="text-sm text-stone">Setting up your premium features...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container py-8">
-      {/* Header */}
+      {/* Header with Back Button */}
       <div className="text-center mb-12 fade-in">
+        <div className="flex justify-between items-center mb-6">
+          <button 
+            onClick={onBack}
+            className="btn btn-outline flex items-center gap-2"
+          >
+            <span>←</span>
+            Back to Dashboard
+          </button>
+          <div className="flex-1"></div>
+        </div>
+
         <div className="flex justify-center mb-6">
           <div className="w-20 h-20 bg-gradient-emerald rounded-2xl flex items-center justify-center shadow-lg">
             <span className="text-3xl">🚀</span>
@@ -105,6 +170,19 @@ function SubscriptionUpgrade({ user, setUser }) {
           Choose the perfect plan to unlock advanced tools and maximize your environmental impact. 
           All plans include our core SDG tracking features.
         </p>
+        
+        {/* Demo Notice */}
+        <div className="mt-6 p-4 bg-info bg-opacity-10 rounded-lg border border-info border-opacity-20 max-w-2xl mx-auto">
+          <div className="flex items-center gap-3">
+            <span className="text-info text-lg">💡</span>
+            <div>
+              <p className="text-sm font-semibold text-info">Demo Mode Active</p>
+              <p className="text-xs text-stone">
+                Using mock payment simulation. No real payment will be processed.
+              </p>
+            </div>
+          </div>
+        </div>
         
         {/* Billing Toggle */}
         <div className="flex items-center justify-center gap-6 mt-8">
