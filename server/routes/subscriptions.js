@@ -36,7 +36,7 @@ router.post('/initialize', async (req, res) => {
 
     // Use your actual Vercel URL
     const frontendBaseUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://plp-final-project-chi.vercel.app'
+      ? 'https://finale-plp-project-chi.vercel.app'
       : 'http://localhost:3000';
 
     const callbackUrl = `${frontendBaseUrl}/payment-callback`;
@@ -153,14 +153,14 @@ router.get('/verify/:reference', async (req, res) => {
       });
 
       // Redirect to your Vercel app with success message
-      res.redirect(`https://plp-final-project-chi.vercel.app/payment-success?userId=${userId}&plan=${plan}`);
+      res.redirect(`https://finale-plp-project-chi.vercel.app/payment-success?userId=${userId}&plan=${plan}`);
       
     } else {
-      res.redirect('https://plp-final-project-chi.vercel.app/payment-failed');
+      res.redirect('https://finale-plp-project-chi.vercel.app/payment-failed');
     }
   } catch (error) {
     console.error('Payment verification error:', error);
-    res.redirect('https://plp-final-project-chi.vercel.app/payment-error');
+    res.redirect('https://finale-plp-project-chi.vercel.app/payment-error');
   }
 });
 
@@ -196,13 +196,13 @@ router.get('/verify-json/:reference', async (req, res) => {
         userId: userId,
         plan: plan,
         billingPeriod: billingPeriod,
-        redirectUrl: `https://plp-final-project-chi.vercel.app/payment-success?userId=${userId}&plan=${plan}`
+        redirectUrl: `https://finale-plp-project-chi.vercel.app/payment-success?userId=${userId}&plan=${plan}`
       });
       
     } else {
       res.json({
         success: false,
-        redirectUrl: 'https://plp-final-project-chi.vercel.app/payment-failed'
+        redirectUrl: 'https://finale-plp-project-chi.vercel.app/payment-failed'
       });
     }
   } catch (error) {
@@ -210,7 +210,7 @@ router.get('/verify-json/:reference', async (req, res) => {
     res.json({
       success: false,
       error: error.message,
-      redirectUrl: 'https://plp-final-project-chi.vercel.app/payment-error'
+      redirectUrl: 'https://finale-plp-project-chi.vercel.app/payment-error'
     });
   }
 });

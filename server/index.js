@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000;
 
 // Add CORS configuration
 app.use(cors({
-  origin: ['https://plp-final-project-chi.vercel.app', 'http://localhost:3000'],
+  origin: ['https://finale-plp-project-chi.vercel.app', 'http://localhost:3000'],
   credentials: true
 }));
 
