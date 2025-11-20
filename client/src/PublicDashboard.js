@@ -8,6 +8,35 @@ function PublicDashboard() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Temporary mock data while CORS is being fixed
+    const mockData = {
+      sdgImpact: {
+        mealsSupported: 12500,
+        foodWasteReduced: 45,
+        co2Reduced: 120,
+        waterSaved: 1250,
+        treesPlanted: 850,
+        circularProjects: 45
+      },
+      totalUsers: 1500,
+      totalPrompts: 28900,
+      platformStats: {
+        farmersRegistered: 450,
+        consumersRegistered: 1050,
+        premiumSubscribers: 120,
+        proSubscribers: 80,
+        sustainableFarms: 124
+      }
+    };
+    
+    // Simulate API loading delay
+    setTimeout(() => {
+      setDashboardData(mockData);
+      setIsLoading(false);
+    }, 1000);
+    
+    // Keep the original fetch commented until CORS is fixed
+    /*
     fetch(`${process.env.REACT_APP_API_URL}/api/dashboard/public`)
       .then(response => response.json())
       .then(data => {
@@ -18,6 +47,7 @@ function PublicDashboard() {
         console.error('Error loading dashboard:', error);
         setIsLoading(false);
       });
+    */
   }, []);
 
   if (showCharts) {
@@ -96,7 +126,7 @@ function PublicDashboard() {
             icon: '🗑️',
             title: 'Food Waste Reduced',
             value: `${dashboardData.sdgImpact.foodWasteReduced} tons`,
-            description: `Equivalent to ${Math.round(dashboardData.sdgImpact.foodWasteReduced * 2204)} pounds saved`,
+            description: `Equivalent to ${Math.round(dashboardData.sdgImpact.foodWasteReduced * 2204).toLocaleString()} pounds saved`,
             type: 'info'
           },
           {
@@ -116,6 +146,30 @@ function PublicDashboard() {
         ))}
       </div>
 
+      {/* Additional Impact Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 fade-in">
+        <div className="card text-center p-6 bg-gradient-to-br from-emerald to-teal text-white">
+          <div className="text-2xl mb-2">💧</div>
+          <h4 className="font-semibold mb-1">Water Saved</h4>
+          <div className="text-2xl font-bold">{dashboardData.sdgImpact.waterSaved}K L</div>
+          <p className="text-xs opacity-90 mt-2">Through efficient irrigation</p>
+        </div>
+        
+        <div className="card text-center p-6 bg-gradient-to-br from-sky to-ocean text-white">
+          <div className="text-2xl mb-2">🌳</div>
+          <h4 className="font-semibold mb-1">Trees Planted</h4>
+          <div className="text-2xl font-bold">{dashboardData.sdgImpact.treesPlanted}</div>
+          <p className="text-xs opacity-90 mt-2">Carbon sequestration initiatives</p>
+        </div>
+        
+        <div className="card text-center p-6 bg-gradient-to-br from-amber to-coral text-white">
+          <div className="text-2xl mb-2">🔄</div>
+          <h4 className="font-semibold mb-1">Circular Projects</h4>
+          <div className="text-2xl font-bold">{dashboardData.sdgImpact.circularProjects}</div>
+          <p className="text-xs opacity-90 mt-2">Zero-waste initiatives</p>
+        </div>
+      </div>
+
       {/* Platform Insights */}
       <div className="grid grid-2 gap-8 mb-12 stagger">
         {/* Platform Statistics */}
@@ -131,12 +185,13 @@ function PublicDashboard() {
           </h3>
           <div className="space-y-4">
             {[
-              { label: 'Total Users', value: dashboardData.totalUsers, color: 'forest' },
+              { label: 'Total Users', value: dashboardData.totalUsers.toLocaleString(), color: 'forest' },
               { label: 'AI Prompts Processed', value: dashboardData.totalPrompts.toLocaleString(), color: 'teal' },
-              { label: 'Farmers Registered', value: dashboardData.platformStats.farmersRegistered, color: 'emerald' },
-              { label: 'Consumers Registered', value: dashboardData.platformStats.consumersRegistered, color: 'sky' }
+              { label: 'Farmers Registered', value: dashboardData.platformStats.farmersRegistered.toLocaleString(), color: 'emerald' },
+              { label: 'Consumers Registered', value: dashboardData.platformStats.consumersRegistered.toLocaleString(), color: 'sky' },
+              { label: 'Sustainable Farms', value: dashboardData.platformStats.sustainableFarms.toLocaleString(), color: 'earth' }
             ].map((stat, index) => (
-              <div key={index} className="flex justify-between items-center p-4 bg-snow rounded-xl border border-cloud">
+              <div key={index} className="flex justify-between items-center p-4 bg-snow rounded-xl border border-cloud hover:bg-cloud transition-colors">
                 <span className="font-medium text-charcoal">{stat.label}</span>
                 <span className={`font-bold text-${stat.color} text-lg`}>{stat.value}</span>
               </div>
@@ -162,31 +217,37 @@ function PublicDashboard() {
                 value: dashboardData.platformStats.premiumSubscribers || 0,
                 total: dashboardData.totalUsers,
                 gradient: 'gradient-premium',
-                color: 'purple'
+                color: 'purple',
+                icon: '⭐'
               },
               {
                 label: 'Pro Subscribers',
                 value: dashboardData.platformStats.proSubscribers || 0,
                 total: dashboardData.totalUsers,
                 gradient: 'gradient-sky',
-                color: 'sky'
+                color: 'sky',
+                icon: '🚀'
               },
               {
                 label: 'Free Users',
                 value: dashboardData.totalUsers - ((dashboardData.platformStats.premiumSubscribers || 0) + (dashboardData.platformStats.proSubscribers || 0)),
                 total: dashboardData.totalUsers,
                 gradient: 'gradient-cloud',
-                color: 'stone'
+                color: 'stone',
+                icon: '🌱'
               }
             ].map((tier, index) => (
-              <div key={index} className="p-4 bg-snow rounded-xl border border-cloud">
+              <div key={index} className="p-4 bg-snow rounded-xl border border-cloud hover:bg-cloud transition-colors">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="font-medium text-charcoal">{tier.label}</span>
-                  <span className={`font-bold text-${tier.color} text-lg`}>{tier.value}</span>
+                  <div className="flex items-center gap-2">
+                    <span>{tier.icon}</span>
+                    <span className="font-medium text-charcoal">{tier.label}</span>
+                  </div>
+                  <span className={`font-bold text-${tier.color} text-lg`}>{tier.value.toLocaleString()}</span>
                 </div>
-                <div className="impact-meter">
+                <div className="impact-meter bg-cloud rounded-full h-2">
                   <div 
-                    className="impact-progress" 
+                    className="impact-progress h-2 rounded-full" 
                     style={{ 
                       width: `${(tier.value / tier.total) * 100}%`,
                       background: `var(--${tier.gradient})`
@@ -204,7 +265,7 @@ function PublicDashboard() {
 
       {/* Call to Action */}
       <div className="text-center mb-12 fade-in">
-        <div className="card-elevated inline-block max-w-2xl">
+        <div className="card-elevated inline-block max-w-2xl w-full p-8">
           <div className="flex justify-center mb-6">
             <div className="w-16 h-16 bg-gradient-to-r from-sun to-earth rounded-2xl flex items-center justify-center">
               <span className="text-2xl">🚀</span>
@@ -227,7 +288,7 @@ function PublicDashboard() {
             </button>
             
             <button 
-              onClick={() => window.open(`${process.env.REACT_APP_API_URL}/api/dashboard/export`, '_blank')}
+              onClick={() => alert('Export feature will be available when backend CORS is fixed')}
               className="btn btn-secondary btn-lg"
             >
               <div className="flex items-center gap-2">
@@ -255,6 +316,9 @@ function PublicDashboard() {
           Every interaction on our platform contributes directly to the United Nations Sustainable Development Goals. 
           Together, we're building a more sustainable and equitable food system for future generations.
         </p>
+        <div className="mt-4 text-sm opacity-80">
+          <em>Using mock data temporarily - Real-time data will resume when CORS is resolved</em>
+        </div>
       </div>
     </div>
   );
