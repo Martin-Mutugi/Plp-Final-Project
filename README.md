@@ -91,21 +91,20 @@ node index.js
 
 ## 📸 Screenshots
 
-* **Public Dashboard Overview:**
-  `![Public Dashboard](screenshots/public-dashboard.png)`
+### **Public Dashboard Overview**
+![Public Dashboard](screenshots/public-dashboard.png)
 
-* **Farmer Tools Interface:**
-  `![Farmer Tools](screenshots/farmer-tools.png)`
+### **Farmer Tools Interface**
+![Farmer Tools](screenshots/farmer-tools.png)
 
-* **Consumer Tools Interface:**
-  `![Consumer Tools](screenshots/consumer-tools.png)`
+### **Consumer Tools Interface**
+![Consumer Tools](screenshots/consumer-tools.png)
 
-* **Premium Dashboard & Analytics:**
-  `![Premium Dashboard](screenshots/premium-dashboard.png)`
+### **Premium Dashboard & Analytics**
+![Premium Dashboard](screenshots/premium-dashboard.png)
 
-* **AI Agriculture Assistant:**
-  `![AI Agriculture](screenshots/AI-Agriculture.png)`
-
+### **AI Agriculture Assistant**
+![AI Agriculture](screenshots/AI-Agriculture.png)
 
 ---
 
