@@ -90,12 +90,22 @@ node index.js
 ---
 
 ## 📸 Screenshots
-(Add screenshots here once available. Suggested screenshots:)
-1. Public Dashboard overview  
-2. Farmer Tools interface  
-3. Consumer Tools interface  
-4. Premium Dashboard with analytics  
-5. Subscription upgrade flow  
+
+* **Public Dashboard Overview:**
+  `![Public Dashboard](screenshots/public-dashboard.png)`
+
+* **Farmer Tools Interface:**
+  `![Farmer Tools](screenshots/farmer-tools.png)`
+
+* **Consumer Tools Interface:**
+  `![Consumer Tools](screenshots/consumer-tools.png)`
+
+* **Premium Dashboard & Analytics:**
+  `![Premium Dashboard](screenshots/premium-dashboard.png)`
+
+* **AI Agriculture Assistant:**
+  `![AI Agriculture](screenshots/AI-Agriculture.png)`
+
 
 ---
 
